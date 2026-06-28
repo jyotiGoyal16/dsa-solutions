@@ -76,3 +76,31 @@ var nextGreaterElement = function(nums1, nums2) {
 
    return ans;
 };
+
+//Another solution using stack- process nums2 in reverse
+var nextGreaterElement = function(nums1, nums2) {
+   let stack = [];
+   let map = {};
+   let res = [];
+
+   for(let i = nums2.length - 1; i >= 0; i--){
+        while(stack.length){
+            if(stack[stack.length - 1] < nums2[i]){
+                stack.pop();
+            }else{
+                map[nums2[i]] = stack[stack.length - 1];
+                break;
+            }
+        }
+        if(!stack.length){
+            map[nums2[i]] = -1;
+        }
+        stack.push(nums2[i]);
+   }
+
+   for(let num of nums1){
+    res.push(map[num]);
+   }
+
+   return res;
+};
