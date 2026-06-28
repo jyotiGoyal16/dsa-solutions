@@ -36,3 +36,27 @@ var dailyTemperatures = function(temperatures) {
 
     return answer;
 };
+
+// Another approach with stack
+var dailyTemperatures = function(temperatures) {
+    if(!temperatures || !temperatures.length) return [];
+
+    let stack = [];
+    let answer = [];
+
+    for(let i = temperatures.length - 1; i >= 0; i--){
+        while(stack.length){
+            if(temperatures[stack.at(-1)] <= temperatures[i]){
+                stack.pop();
+            }else{
+                let top = stack.at(-1);
+                answer[i] = top - i;
+                break;
+            }
+        }
+        if(!stack.length) answer[i] = 0;
+        stack.push(i);
+    }
+
+    return answer;
+};
